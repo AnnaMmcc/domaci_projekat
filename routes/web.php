@@ -20,7 +20,7 @@ Route::post("/create-product", [ShopController::class, 'CreateProducts']);
 Route::post("/send-contact", [ContactController::class, "sendContact"]);
 
 
-Route::middleware('auth')->prefix("admin")->group(function (){
+Route::middleware(["auth", \App\Http\Middleware\AdminCheck::class])->prefix("admin")->group(function (){
 
 
     Route::get("/all-contacts",[ContactController::class, 'getAllContacts']);
