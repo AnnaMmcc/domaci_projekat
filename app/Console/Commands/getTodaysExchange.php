@@ -2,6 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Models\ExchangeRates;
+use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
@@ -29,13 +31,28 @@ class getTodaysExchange extends Command
     {
       $ApiKey = trim(env("EXCHANGE_API_KEY"));
 
-      $url = "https://v6.exchangerate-api.com/v6/{$ApiKey}/latest/USD";
+      $baseCurrency = "RSD";
+
+      $url = "https://v6.exchangerate-api.com/v6/{$ApiKey}/latest/$baseCurrency";
 
       $response = Http::get($url);
 
-      $usd = $response["conversion_rates"]["USD"];
-      $eur = $response["conversion_rates"]["EUR"];
-      dd($usd, $eur);
+      foreach(ExchangeRates::AVAILABLE_CURRENCIES as $currency)
+      {
+              $toDayCurrency = ExchangeRates::getCurrencyForToday($currency);
+
+              if($toDayCurrency !== null)
+              {
+                  continue;
+              }
+
+             ExchangeRates::create([
+              'currency' => $currency,
+              'value' => $response->json()["conversion_rates"][$currency]
+              ]);
+      }
+
+
 
 
     }
