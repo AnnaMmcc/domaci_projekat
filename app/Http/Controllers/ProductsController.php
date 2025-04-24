@@ -3,10 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProductModel;
+use App\Repositories\ProductRepository;
 use Illuminate\Http\Request;
 
 class ProductsController extends Controller
 {
+    private $ProductRepo;
+
+    public function __construct()
+    {
+        $this->ProductRepo = new ProductRepository();
+    }
+
     public function index()
     {
         $allProducts = ProductModel::all();
@@ -15,7 +23,8 @@ class ProductsController extends Controller
 
     public function delete($product)
     {
-        $singleProduct = ProductModel::where(['id' => $product])->first();
+        $singleProduct = $this->ProductRepo->deleteProduct($product);
+
         if($singleProduct === null)
         {
             die("OVAJ PROIZVOD NE POSTOJI!");
@@ -27,6 +36,7 @@ class ProductsController extends Controller
 
     public function singleProduct(Request $request, $id)
     {
+
         $product = ProductModel::where(['id' => $id])->first();
 
         if($product === null)
@@ -37,25 +47,9 @@ class ProductsController extends Controller
         return view("products/edit", compact('product'));
     }
 
-    public function edit(Request $request, $id)
+    public function edit(Request $request,ProductModel $product)
     {
-        $product = ProductModel::where(['id' => $id])->first();
-
-        if($product === null)
-        {
-            die("proizvod ne postoji");
-        }
-        $product->name = $request->get("name");
-
-        $product->description = $request->get("description");
-
-        $product->amount = $request->get("amount");
-
-        $product->price = $request->get("price");
-
-        $product->image = $request->get("image");
-
-        $product->save();
+        $this->ProductRepo->editProduct($product, $request);
 
         return redirect()->back();
     }

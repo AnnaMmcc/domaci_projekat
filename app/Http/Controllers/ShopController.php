@@ -2,11 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SaveProductRequest;
 use App\Models\ProductModel;
+use App\Repositories\ProductRepository;
 use Illuminate\Http\Request;
 
 class ShopController extends Controller
 {
+    private $productRepo;
+
+    public function __construct()
+    {
+        $this->productRepo = new ProductRepository();
+    }
     public function index()
     {
      $products = ProductModel::all();
@@ -19,24 +27,9 @@ class ShopController extends Controller
        return view ("/admin/add-product");
     }
 
-    public function CreateProducts(Request $request)
+    public function CreateProducts(SaveProductRequest $request)
     {
-        $request->validate([
-            "name"=> "required|string|unique:product",
-            "description" => "required|string|min:5",
-            "amount" => "required|int|min:0",
-            "price" => "required|int|min:0",
-            "image" => "required|string"
-        ]);
-
-
-        ProductModel::create([
-            "name" => $request->get("name"),
-            "description" => $request->get("description"),
-            "amount" => $request->get("amount"),
-            "price" => $request->get("price"),
-            "image" => $request->get("image"),
-        ]);
+       $this->productRepo->createNewProduct($request);
 
         return redirect("admin/all-products");
     }
