@@ -2,14 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SendContactRequest;
 use App\Models\ContactModel;
+use App\Repositories\ContactRepository;
 use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
+    private $ContactRepo;
+
+    public function __construct()
+    {
+        $this->ContactRepo = new ContactRepository();
+    }
+
     public function index()
     {
-        return view("contact");
+       return view("contact");
     }
     public function getAllContacts()
     {
@@ -17,26 +26,18 @@ class ContactController extends Controller
 
         return view("allContacts", compact("allContacts"));
     }
-    public function sendContact(Request $request)
+    public function sendContact(SendContactRequest $request)
     {
-        $request->validate([
-            "email"=> "required|string",
-            "subject" => "required|string",
-            "description" => "required|string|min:5|max:255"
-        ]);
+        $this->ContactRepo->CreateContacts($request);
 
-
-        ContactModel::create([
-            "email" => $request->get("email"),
-            "subject" => $request->get("subject"),
-            "message" => $request->get("description")
-        ]);
+        return redirect()->back();
 
     }
 
     public function delete($contact)
     {
-        $singleContacts = ContactModel::where(['id' => $contact])->first();
+        //$singleContacts = ContactModel::where(['id' => $contact])->first();
+        $singleContacts = $this->ContactRepo->delete($contact);
 
         if($singleContacts === null)
         {
@@ -50,7 +51,8 @@ class ContactController extends Controller
 
     public function editContact(Request $request, $id)
     {
-        $contact = ContactModel::where(['id' => $id])->first();
+        //$contact = ContactModel::where(['id' => $id])->first();
+        $contact = $this->ContactRepo->edit($id);
 
         if ($contact === null) {
             die("Nepostojeci kontakt");
@@ -61,17 +63,13 @@ class ContactController extends Controller
 
      public function saveContact(Request $request, $id)
      {
-        $contact = ContactModel::where(['id' => $id])->first();
-
+        //$contact = ContactModel::where(['id' => $id])->first();
+         $contact = $this->ContactRepo->getContactByID($id);
        if($contact === null)
        {
             die("Nepostojeci kontakt");
        }
-
-        $contact->email = $request->get("email");
-        $contact->subject = $request->get("subject");
-        $contact->message = $request->get("message");
-
+        $this->ContactRepo->SaveContact($contact, $request);
         $contact->save();
 
         return redirect()->back();

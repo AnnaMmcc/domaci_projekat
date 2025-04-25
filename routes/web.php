@@ -7,7 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
 
-Route::get("/",[ HomeController::class, 'index']);
+Route::get("/",[ HomeController::class, 'index'])->name('home');
 
 Route::view("/about", "about");
 
@@ -17,7 +17,7 @@ Route::get("/contact", [ContactController::class, 'index']);
 
 Route::post("/create-product", [ShopController::class, 'CreateProducts']);
 
-Route::post("/send-contact", [ContactController::class, "sendContact"]);
+Route::post("/send-contact", [ContactController::class, "sendContact"])->name("Send.Contact");
 
 
 Route::middleware(["auth", \App\Http\Middleware\AdminCheck::class])->prefix("admin")->group(function (){
