@@ -3,15 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Models\HomepageModel;
+use App\Repositories\HomePageRepository;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+    private $HomeRepo;
+
+    public function __construct()
+    {
+        $this->HomeRepo = new HomePageRepository();
+    }
     public function index()
     {
         $trenutnoVreme = date("h:i:s");
         $trenutnoSati = date("h");
-        $newestProducts = HomepageModel::select('name', 'description', 'price')->orderby('id', 'desc')->take(6)->get();
+        $newestProducts = $this->HomeRepo->GetItemsHome();
         return view("welcome", compact('trenutnoVreme', 'trenutnoSati', 'newestProducts'));
     }
 }

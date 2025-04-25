@@ -34,15 +34,9 @@ class ProductsController extends Controller
         return redirect()->back();
     }
 
-    public function singleProduct(Request $request, $id)
+    public function singleProduct( Request $request, $id)
     {
-
-        $product = ProductModel::where(['id' => $id])->first();
-
-        if($product === null)
-    {
-        die("Ovaj proizvod ne postoji");
-    }
+        $product = $this->ProductRepo->GetSingleProduct($id);
 
         return view("products/edit", compact('product'));
     }

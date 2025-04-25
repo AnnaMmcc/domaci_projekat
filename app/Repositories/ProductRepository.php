@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\ProductModel;
+use Illuminate\Http\Request;
 
 class ProductRepository
 {
@@ -44,5 +45,10 @@ class ProductRepository
        $product->image = $request->get("image");
 
        $product->save();
+   }
+
+   public function GetSingleProduct($id)
+   {
+       return $this->productModel->where(['id' => $id])->first();
    }
 }
