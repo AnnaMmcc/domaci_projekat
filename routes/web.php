@@ -19,9 +19,9 @@ Route::get("/contact", [ContactController::class, 'index']);
 Route::middleware(["auth", \App\Http\Middleware\AdminCheck::class])->prefix("admin")->group(function (){
 
 Route::controller(ContactController::class)->prefix("/contact")->group(function (){
-    Route::get("/all-contacts", 'getAllContacts')
+    Route::get("/all", 'getAllContacts')
     ->name("allContacts");
-    Route::get("/delete-contact/{contact}",'delete')
+    Route::get("/delete/{contact}",'delete')
         ->name("obrisiKontakt");
     Route::get("/edit/{id}",'editContact')
         ->name("contact.edit");
@@ -36,13 +36,13 @@ Route::controller(ContactController::class)->prefix("/contact")->group(function 
    });
 
 
-Route::controller(ProductsController::class)->group(function (){
-    Route::get("/all-products",'index');
-    Route::get("/product/edit/{id}","singleProduct")
+Route::controller(ProductsController::class)->prefix("products")->group(function (){
+    Route::get("/all",'index');
+    Route::get("/edit/{id}","singleProduct")
         ->name("product.single");
-    Route::post("/product/save/{id}",'edit')
+    Route::post("/save/{id}",'edit')
         ->name('product.save');
-    Route::get("/delete-product/{product}",'delete')
+    Route::get("/delete/{product}",'delete')
         ->name("obrisiProizvod");
 });
 
