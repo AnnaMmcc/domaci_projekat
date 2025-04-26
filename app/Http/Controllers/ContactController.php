@@ -7,6 +7,8 @@ use App\Models\ContactModel;
 use App\Repositories\ContactRepository;
 use Illuminate\Http\Request;
 
+//Znam da mogu i skratiti kod ali zelela sam da ostavim ovo ovako radi ucenja i ponavljanja*
+
 class ContactController extends Controller
 {
     private $ContactRepo;

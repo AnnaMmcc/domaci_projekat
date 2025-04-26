@@ -8,50 +8,44 @@ use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
 
 Route::get("/",[ HomeController::class, 'index'])->name('home');
-
 Route::view("/about", "about");
-
 Route::get("shop", [ShopController::class, 'index']);
-
+Route::post("/create-product", [ShopController::class, 'CreateProducts']);
+Route::post("/send-contact", [ContactController::class, "sendContact"])->name("Send.Contact");
 Route::get("/contact", [ContactController::class, 'index']);
 
-Route::post("/create-product", [ShopController::class, 'CreateProducts']);
-
-Route::post("/send-contact", [ContactController::class, "sendContact"])->name("Send.Contact");
 
 
 Route::middleware(["auth", \App\Http\Middleware\AdminCheck::class])->prefix("admin")->group(function (){
 
-
-    Route::get("/all-contacts",[ContactController::class, 'getAllContacts']);
-
-
-    Route::get("/add-product", [ShopController::class, 'AddProducts']);
-
-
-    Route::get("/products", [ShopController::class, 'ShowAllProducts']);
-
-    Route::get("/all-products", [ProductsController::class, 'index']);
-
-    Route::get("/product/edit/{id}", [ProductsController::class, "singleProduct"])
-        ->name("product.single");
-
-    Route::post("/product/save/{id}", [ProductsController::class, 'edit'])
-        ->name('product.save');
-
-    Route::get("/delete-product/{product}", [ProductsController::class, 'delete'])
-        ->name("obrisiProizvod");
-
-    Route::get("/delete-contact/{contact}", [ContactController::class, 'delete'])
+Route::controller(ContactController::class)->prefix("/contact")->group(function (){
+    Route::get("/all-contacts", 'getAllContacts')
+    ->name("allContacts");
+    Route::get("/delete-contact/{contact}",'delete')
         ->name("obrisiKontakt");
-
-    Route::get("/contact/edit/{id}", [ContactController::class, 'editContact'])
+    Route::get("/edit/{id}",'editContact')
         ->name("contact.edit");
-
-    Route::post("/contact/save/{id}", [ContactController::class, 'saveContact'])
+    Route::post("/save/{id}", 'saveContact')
         ->name("save.contact");
 
 });
 
+   Route::controller(ShopController::class)->group(function (){
+       Route::get("/add-product",'AddProducts');
+       Route::get("/products",'ShowAllProducts');
+   });
+
+
+Route::controller(ProductsController::class)->group(function (){
+    Route::get("/all-products",'index');
+    Route::get("/product/edit/{id}","singleProduct")
+        ->name("product.single");
+    Route::post("/product/save/{id}",'edit')
+        ->name('product.save');
+    Route::get("/delete-product/{product}",'delete')
+        ->name("obrisiProizvod");
+});
+
+});
 
 require __DIR__.'/auth.php';
