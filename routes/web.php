@@ -20,7 +20,7 @@ Route::middleware(["auth", \App\Http\Middleware\AdminCheck::class])->prefix("adm
 
 Route::controller(ContactController::class)->prefix("/contact")->group(function (){
     Route::get("/all", 'getAllContacts')
-    ->name("allContacts");
+    ->name("all.contacts");
     Route::get("/delete/{contact}",'delete')
         ->name("contact.delete");
     Route::get("/edit/{id}",'editContact')
@@ -43,7 +43,7 @@ Route::controller(ProductsController::class)->prefix("products")->group(function
     Route::post("/save/{id}",'edit')
         ->name('product.save');
     Route::get("/delete/{product}",'delete')
-        ->name("obrisiProizvod");
+        ->name("product.delete");
 });
 
 });
