@@ -22,7 +22,7 @@ Route::controller(ContactController::class)->prefix("/contact")->group(function 
     Route::get("/all", 'getAllContacts')
     ->name("allContacts");
     Route::get("/delete/{contact}",'delete')
-        ->name("obrisiKontakt");
+        ->name("contact.delete");
     Route::get("/edit/{id}",'editContact')
         ->name("contact.edit");
     Route::post("/save/{id}", 'saveContact')
