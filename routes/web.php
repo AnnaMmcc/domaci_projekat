@@ -13,12 +13,16 @@ Route::get("shop", [ShopController::class, 'index']);
 Route::post("/create-product", [ShopController::class, 'CreateProducts']);
 Route::post("/send-contact", [ContactController::class, "sendContact"])->name("Send.Contact");
 Route::get("/contact", [ContactController::class, 'index']);
-
-
+Route::get("/products/{product}", [ProductsController::class, 'permalink'])->name("products.permalink");
+Route::post("/cart/add", [\App\Http\Controllers\ShoppingCartController::class, 'addToCart'])->name('cart.add');
+Route::get("/cart", [\App\Http\Controllers\ShoppingCartController::class, 'index'])->name('cart.index');
 
 Route::middleware(["auth", \App\Http\Middleware\AdminCheck::class])->prefix("admin")->group(function (){
 
-Route::controller(ContactController::class)->prefix("/contact")->name("contact.")->group(function (){
+Route::controller(ContactController::class)
+    ->prefix("/contact")->
+    name("contact.")->
+    group(function (){
     Route::get("/all", 'getAllContacts')
     ->name("all");
     Route::get("/delete/{contact}",'delete')
@@ -36,7 +40,10 @@ Route::controller(ContactController::class)->prefix("/contact")->name("contact."
    });
 
 
-Route::controller(ProductsController::class)->prefix("products")->name("product.")->group(function (){
+Route::controller(ProductsController::class)
+    ->prefix("products")
+    ->name("product.")
+    ->group(function (){
     Route::get("/all",'index');
     Route::get("/edit/{id}","singleProduct")
         ->name("single");

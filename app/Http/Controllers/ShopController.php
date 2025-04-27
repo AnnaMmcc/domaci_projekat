@@ -6,6 +6,7 @@ use App\Http\Requests\SaveProductRequest;
 use App\Models\ProductModel;
 use App\Repositories\ProductRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class ShopController extends Controller
 {
@@ -17,7 +18,7 @@ class ShopController extends Controller
     }
     public function index()
     {
-     $products = ProductModel::all();
+        $products = ProductModel::all();
 
         return view("shop", compact ("products"));
     }
