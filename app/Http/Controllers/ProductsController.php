@@ -34,16 +34,17 @@ class ProductsController extends Controller
         return redirect()->back();
     }
 
-    public function singleProduct( Request $request, $id)
+    public function singleProduct($id)
     {
         $product = $this->ProductRepo->GetSingleProduct($id);
 
         return view("products/edit", compact('product'));
     }
 
-    public function edit(Request $request,ProductModel $product)
+    public function edit(Request $request, $id)
     {
-        $this->ProductRepo->editProduct($product, $request);
+        $product = ProductModel::find($id);
+        $this->ProductRepo->editProduct($request,$product);
 
         return redirect()->back();
     }
