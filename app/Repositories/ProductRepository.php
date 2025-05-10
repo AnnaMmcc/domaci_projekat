@@ -16,14 +16,14 @@ class ProductRepository
         $this->productModel = new ProductModel();
     }
 
-   public function createNewProduct($request)
+   public function createNewProduct($data)
    {
        $this->productModel->create([
-           "name" => $request->get("name"),
-           "description" => $request->get("description"),
-           "amount" => $request->get("amount"),
-           "price" => $request->get("price"),
-           "image" => $request->get("image"),
+           "name" => $data["name"],
+           "description" => $data['description'],
+           "amount" =>  $data['amount'],
+           "price" =>  $data['price'],
+           "image" =>  $data['image'] ?? null,
        ]);
    }
 

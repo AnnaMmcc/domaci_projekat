@@ -16,6 +16,9 @@ Route::get("/contact", [ContactController::class, 'index']);
 Route::get("/products/{product}", [ProductsController::class, 'permalink'])->name("products.permalink");
 Route::post("/cart/add", [\App\Http\Controllers\ShoppingCartController::class, 'addToCart'])->name('cart.add');
 Route::get("/cart", [\App\Http\Controllers\ShoppingCartController::class, 'index'])->name('cart.index');
+Route::get("/cart/finish", [\App\Http\Controllers\ShoppingCartController::class, 'finishOrder'])->name('cart.finish');
+
+
 
 Route::middleware(["auth", \App\Http\Middleware\AdminCheck::class])->prefix("admin")->group(function (){
 

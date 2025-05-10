@@ -30,9 +30,18 @@ class ShopController extends Controller
 
     public function CreateProducts(SaveProductRequest $request)
     {
-       $this->productRepo->createNewProduct($request);
+        $data = $request->only(['name', 'description', 'amount', 'price']);
 
-        return redirect("admin/all-products");
+        if($request->hasFile('image'))
+        {
+            $path = $request->file('image')->store('images', 'public');
+
+            $data['image'] = $path;
+        }
+
+        $this->productRepo->createNewProduct($data);
+
+        return redirect("/");
     }
 
     public function ShowAllProducts()

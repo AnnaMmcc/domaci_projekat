@@ -8,7 +8,7 @@
     <title>Create Product</title>
 </head>
 <body>
-<form method="post" action="/create-product">
+<form method="post" action="/create-product" enctype="multipart/form-data">
     @if($errors->any())
         <p class="text-danger">Greska: {{ $errors->first() }}</p>
     @endif
@@ -21,7 +21,7 @@
 
     <input type="number" name="price" id="price" placeholder="Unesite cenu proizvoda" value="{{old("price")}}">
 
-    <input type="text" name="image" id="image" placeholder="unesite sliku proizvoda" value="{{old("image")}}">
+    <input type="file" name="image" id="image" placeholder="unesite sliku proizvoda">
 
     <button>Kreiraj proizvod</button>
 </form>

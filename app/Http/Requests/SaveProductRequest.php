@@ -23,7 +23,7 @@ class SaveProductRequest extends FormRequest
                 "description" => "required|string|min:5",
                 "amount" => "required|int|min:0",
                 "price" => "required|int|min:0",
-                "image" => "required|string"
+                "image" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048"
         ];
     }
 }
