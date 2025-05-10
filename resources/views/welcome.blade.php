@@ -19,7 +19,7 @@
     <div class="container">
         <div class="row">
             @foreach($newestProducts as $newproduct)
-                <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
                     <div class="card h-100">
                         <img src="{{ asset('storage/' . $newproduct->image) }}" class="card-img-top" alt="{{ $newproduct->name }}">
                         <div class="card-body d-flex flex-column">

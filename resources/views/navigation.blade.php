@@ -28,11 +28,13 @@
                         </button>
                     </form>
                 @else
-                <a href="{{ route('login') }}" class="btn btn-primary">Login</a>
+                    <a href="{{ route('login') }}" class="btn btn-primary">Login</a>
                 @endauth
             </div>
         </div>
     </div>
+
+
     <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,8 +44,9 @@
             <ul class="navbar-nav">
                 {{-- Admin linkovi --}}
                 @if(auth()->check() && auth()->user()->role === 'admin')
+
                     <li class="nav-item">
-                        <a class="nav-link text-primary" href="{{route("contact.all")}}">Contacts</a>
+                        <a class="nav-link text-primary" href="{{ route('contact.all') }}">Contacts</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-primary" href="/admin/add-product}">Add new product</a>
@@ -56,6 +59,8 @@
         </div>
     </div>
 </nav>
+
+
 
 
 
