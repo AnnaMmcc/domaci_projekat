@@ -49,10 +49,10 @@
                         <a class="nav-link text-primary" href="{{ route('contact.all') }}">Contacts</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-primary" href="/admin/add-product}">Add new product</a>
+                        <a class="nav-link text-primary" href="/admin/add-product">Add new product</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-danger" href="admin/products/all">Edit & Delete Products</a>
+                        <a class="nav-link text-danger" href="/admin/products/all">Edit & Delete Products</a>
                     </li>
                 @endif
             </ul>
