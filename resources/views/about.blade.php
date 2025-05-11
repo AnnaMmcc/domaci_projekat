@@ -1,7 +1,7 @@
 @extends("layout")
 @section("sadrzajStranice")
-    <p>Ovo je moj sajt</p>
+    <div class="container">Ovo je moj sajt, text o nama...web shop</div>
 @endsection()
 @section("naslovStranice")
-    About
+ About
 @endsection()

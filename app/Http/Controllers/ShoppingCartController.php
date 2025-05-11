@@ -30,11 +30,17 @@ class ShoppingCartController extends Controller
                 'amount' => $item['amount'],
                 'description' => $product->description,
                 'price' => $product->price,
+                'image' => $product->image,
                 'total' => $item['amount'] * $product->price
             ];
         })->filter()->values();
 
-        return view("cart", ['combinedItems' => $combined]);
+        $totalPrice = $combined->sum('total');
+
+        return view("cart",
+            ['combinedItems' => $combined,
+                'totalPrice' => $totalPrice
+            ]);
     }
 
     public function addToCart(CartAddRequest $request)

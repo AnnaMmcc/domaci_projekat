@@ -1,4 +1,4 @@
-<footer class="bg-dark text-white d-flex justify-content-center align-items-center p-1 m-0">
-    <div>Copyright &copy; 2025</div>
-</footer>
 
+<footer class="bg-dark text-white text-center py-1 fixed-bottom">
+    &copy; 2025 Moja Firma. Sva prava zadržana.
+</footer>

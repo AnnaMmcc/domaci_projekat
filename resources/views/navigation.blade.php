@@ -20,20 +20,13 @@
                 </li>
             </ul>
             <div>
-                @auth
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button class="btn btn-primary" type="submit">
-                            Logout
-                        </button>
-                    </form>
-                @else
-                    <a href="{{ route('login') }}" class="btn btn-primary">Login</a>
-                @endauth
+                <a href="{{route('cart.index')}}">
+                    <i class="fa-solid fa-cart-shopping text-danger"></i>
+                </a>
             </div>
+
         </div>
     </div>
-
 
     <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -42,6 +35,20 @@
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
+                <li>
+                    @auth
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button class="btn btn-primary ml-4" type="submit">
+                                Logout
+                            </button>
+                        </form>
+                    @else
+                        <a href="{{ route('login') }}" class="btn btn-primary">Login</a>
+                        <a href="{{ route('register') }}" class="btn btn-primary">Register</a>
+
+                    @endauth
+                </li>
                 {{-- Admin linkovi --}}
                 @if(auth()->check() && auth()->user()->role === 'admin')
 

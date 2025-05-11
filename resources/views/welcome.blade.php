@@ -15,6 +15,16 @@
         @endif
             <p class="text-secondary">Trenutno vreme je {{$trenutnoVreme}}</p>
     </button>
+    <div class="container mb-5 mt-4">
+        <div class="search-bar">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search..." aria-label="Search" aria-describedby="search-addon">
+                <button class="btn btn-outline-secondary" type="button" id="search-addon">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </div>
 
     <div class="container">
         <div class="row">

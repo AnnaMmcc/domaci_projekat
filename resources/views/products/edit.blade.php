@@ -1,8 +1,8 @@
 @extends("layout")
 
 @section("sadrzajStranice")
-
-<form method="POST" action="{{ route("product.save", ['id' => $product->id]) }}">
+<div class="container col-lg-6">
+    <form method="POST" action="{{ route("product.save", ['id' => $product->id]) }}">
         {{csrf_field()}}
         <div class="mb-3">
             <label for="name" class="form-label">Name</label>
@@ -31,5 +31,7 @@
 
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+</div>
+
 
 @endsection

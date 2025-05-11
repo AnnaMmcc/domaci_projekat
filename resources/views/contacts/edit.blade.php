@@ -1,7 +1,7 @@
 @extends("layout")
 
 @section("sadrzajStranice")
-
+<div class="container col-lg-6">
     <form method="POST" action="{{ route("contact.save", ['id' => $contact->id]) }}">
         {{csrf_field()}}
         <div class="mb-3">
@@ -22,5 +22,7 @@
 
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+</div>
+
 
 @endsection
