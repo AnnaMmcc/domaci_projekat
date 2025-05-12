@@ -1,7 +1,7 @@
 @extends("layout")
 
 @section("naslovStranice")
-    Home Page
+     Web Shop
 @endsection
 
 @section("sadrzajStranice")

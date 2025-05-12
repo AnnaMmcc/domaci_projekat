@@ -1,4 +1,7 @@
 @extends("layout")
+@section("naslovStranice")
+    Cart - Web Shop
+@endsection()
 @section("sadrzajStranice")
     @if(session('success'))
         <div class="text-success">{{ session('success') }}</div>

@@ -1,4 +1,7 @@
 @extends("layout")
+@section("naslovStranice")
+    Cart - Finish
+@endsection()
 
 @section("sadrzajStranice")
     <div class="container m-5">
