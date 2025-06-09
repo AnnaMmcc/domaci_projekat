@@ -111,4 +111,59 @@ class ShoppingCartController extends Controller
         return view("thankYou");
     }
 
+    public function guestAdd(Request $request)
+    {
+        if (Auth::check()) {
+            return redirect()->route('cart.add.from.redirect', [
+                'id' => $request->id,
+                'amount' => $request->amount,
+                'back' => $request->redirect ?? url()->previous()
+            ]);
+        }
+
+        return redirect()->route('register', [
+            'redirect' => route('cart.add.from.redirect', [
+                'id' => $request->id,
+                'amount' => $request->amount,
+                'back' => $request->redirect ?? url()->previous()
+            ])
+        ]);
+    }
+    public function addFromRedirect(Request $request)
+    {
+        $productId = $request->input('id');
+        $amount = $request->input('amount', 1);
+
+        $product = ProductModel::find($productId);
+
+        if (!$product || $product->amount < $amount) {
+            return redirect()->route('cart.index')->with('error', 'Nema dovoljno proizvoda na stanju');
+        }
+
+        $korpa = Session::get('product', []);
+        $postoji = false;
+
+        foreach ($korpa as &$item) {
+            if ($item['product_id'] == $productId) {
+                $item['amount'] += $amount;
+                $postoji = true;
+                break;
+            }
+        }
+
+        if (!$postoji) {
+            $korpa[] = [
+                'product_id' => $productId,
+                'amount' => $amount
+            ];
+        }
+
+        Session::put('product', $korpa);
+
+        session()->flash('success', 'Proizvod je dodat u korpu');
+
+        return redirect($request->input('back', route('cart.index')));
+    }
+
+
 }

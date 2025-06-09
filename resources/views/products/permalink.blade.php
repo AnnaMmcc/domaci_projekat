@@ -15,21 +15,41 @@
                             <p class="card-text">{{ $product->description }}</p>
                             <p class="mt-auto card-text"><strong>{{ $product->price }} din</strong></p>
                             <div>
-                                <form method="POST" action="{{ route("cart.add") }}">
-                                    {{ csrf_field() }}
-                                    @if(session('error'))
-                                        <div class="text-danger">{{ session('error') }}</div>
-                                    @endif
+                                @auth
+                                    <form method="POST" action="{{ route('cart.add') }}">
+                                        @csrf
 
-                                    <input type="hidden" name="id" value="{{ $product->id }}">
-                                    <div class="form-group card-text">
-                                        <label for="amount">Amount:</label>
-                                        <input type="number" class="form-control" id="amount" name="amount"  placeholder="Enter amount">
-                                    </div>
-                                    <button class="btn btn-primary m-3 card-text">Add to cart</button>
+                                        <input type="hidden" name="id" value="{{ $product->id }}">
 
-                                </form>
-                        </div>
+                                        <div class="form-group card-text">
+                                            <label for="amount">Amount:</label>
+                                            <input type="number" class="form-control" id="amount" name="amount" value="1" min="1" placeholder="Enter amount" required>
+                                        </div>
+
+                                        @if(session('error'))
+                                            <div class="text-danger">{{ session('error') }}</div>
+                                        @endif
+
+                                        <button class="btn btn-primary m-3 card-text">Add to cart</button>
+                                    </form>
+                                @else
+                                    <form method="GET" action="{{ route('cart.guestAdd') }}">
+                                        <input type="hidden" name="id" value="{{ $product->id }}">
+
+                                        <div class="form-group card-text">
+                                            <label for="amount">Amount:</label>
+                                            <input type="number" class="form-control" id="amount" name="amount" value="1" min="1" placeholder="Enter amount" required>
+                                        </div>
+
+                                        <input type="hidden" name="redirect" value="{{ request()->fullUrl() }}">
+
+                                        <button class="btn btn-warning m-3 card-text text-white fw-bold">
+                                            Додај у корпу
+                                        </button>
+                                    </form>
+                                @endauth
+
+                            </div>
                     </div>
                 </div>
         </div>

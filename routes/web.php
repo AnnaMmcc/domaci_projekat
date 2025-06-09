@@ -17,6 +17,8 @@ Route::get("/products/{product}", [ProductsController::class, 'permalink'])->nam
 Route::post("/cart/add", [\App\Http\Controllers\ShoppingCartController::class, 'addToCart'])->name('cart.add');
 Route::get("/cart", [\App\Http\Controllers\ShoppingCartController::class, 'index'])->name('cart.index');
 Route::get("/cart/finish", [\App\Http\Controllers\ShoppingCartController::class, 'finishOrder'])->name('cart.finish');
+Route::get('/cart/guest-add', [\App\Http\Controllers\ShoppingCartController::class, 'guestAdd'])->name('cart.guestAdd');
+Route::get('/cart/add-from-redirect', [\App\Http\Controllers\ShoppingCartController::class, 'addFromRedirect'])->name('cart.add.from.redirect');
 
 
 
